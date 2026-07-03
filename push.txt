@@ -1,4 +1,4 @@
 python scripts/generate-maven-indexes.py
 git add .
-git commit -m "generate maven directory indexes"
+git commit -m "improve maven index pages"
 git push

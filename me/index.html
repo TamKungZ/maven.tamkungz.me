@@ -4,48 +4,219 @@
   <meta charset="utf-8">
   <title>TamKungZ Maven Repository - /me/</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Browse Maven artifacts in /me/ from the TamKungZ Maven Repository.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0f0f0f">
+
+  <link rel="canonical" href="https://maven.tamkungz.me/me/">
+  <link rel="icon" href="https://repo.tamkungz.me/tamkungz-repo-favicon-v2.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="https://repo.tamkungz.me/tamkungz-repo-favicon-v2.ico" type="image/x-icon">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TamKungZ Maven Repository - /me/">
+  <meta property="og:description" content="Browse Maven artifacts in /me/ from the TamKungZ Maven Repository.">
+  <meta property="og:url" content="https://maven.tamkungz.me/me/">
+  <meta property="og:site_name" content="TamKungZ Maven Repository">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="TamKungZ Maven Repository - /me/">
+  <meta name="twitter:description" content="Browse Maven artifacts in /me/ from the TamKungZ Maven Repository.">
+
   <style>
-    body {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      margin: 40px;
-      background: #0f0f0f;
-      color: #e8e8e8;
+    :root {
+      color-scheme: dark;
+      --bg: #0f0f0f;
+      --panel: #151515;
+      --panel-2: #1b1b1b;
+      --text: #e8e8e8;
+      --muted: #8f8f8f;
+      --line: #2a2a2a;
+      --accent: #9fc3fc;
+      --accent-soft: rgba(159, 195, 252, 0.12);
     }
-    a { color: #9fc3fc; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    table { border-collapse: collapse; width: 100%; max-width: 1000px; }
-    td { padding: 6px 10px; border-bottom: 1px solid #2a2a2a; }
-    .path { color: #aaa; margin-bottom: 24px; }
-    .usage {
-      margin: 24px 0;
-      padding: 16px;
-      background: #181818;
-      border: 1px solid #333;
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(159, 195, 252, 0.08), transparent 320px),
+        var(--bg);
+      color: var(--text);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      line-height: 1.6;
+    }
+
+    main {
+      width: min(1040px, calc(100% - 32px));
+      margin: 48px auto;
+    }
+
+    header {
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 42px);
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .path {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 20px;
+      padding: 7px 11px;
+      border: 1px solid var(--line);
       border-radius: 8px;
-      max-width: 1000px;
-      white-space: pre-wrap;
+      background: var(--panel);
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    .usage {
+      margin: 22px 0 26px;
+      padding: 16px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: linear-gradient(180deg, var(--panel-2), var(--panel));
+    }
+
+    pre {
+      margin: 0;
+      color: #dcdcdc;
+      white-space: pre;
+    }
+
+    .table-wrap {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(15, 15, 15, 0.72);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    tr:hover {
+      background: var(--accent-soft);
+    }
+
+    .type {
+      width: 120px;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .name {
+      word-break: break-all;
+    }
+
+    .size {
+      width: 160px;
+      color: var(--muted);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 640px) {
+      main {
+        margin: 28px auto;
+      }
+
+      td {
+        padding: 10px;
+      }
+
+      .type {
+        width: 82px;
+      }
+
+      .size {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>TamKungZ Maven Repository</h1>
-  <div class="path">/me/</div>
+  <main>
+    <header>
+      <h1>TamKungZ Maven Repository</h1>
+      <div class="subtitle">Browse Maven artifacts in /me/ from the TamKungZ Maven Repository.</div>
+      <div class="path">/me/</div>
+    </header>
 
-  <div class="usage">repositories {
+    <section class="usage" aria-label="Gradle repository example">
+      <pre>repositories {
     maven {
-        name = "TamKungZ Maven"
-        url = uri("https://maven.tamkungz.me/")
+        name = &quot;TamKungZ Maven&quot;
+        url = uri(&quot;https://maven.tamkungz.me/&quot;)
     }
-}</div>
+}</pre>
+    </section>
 
-  <table>
-    <tbody>
-      <tr><td>📁</td><td><a href="../">../</a></td><td></td></tr><tr><td>📁</td><td><a href="tamkungz/">tamkungz/</a></td><td></td></tr>
-    </tbody>
-  </table>
+    <section class="table-wrap" aria-label="Maven directory listing">
+      <table>
+        <tbody>
+          
+            <tr>
+              <td class="type">dir</td>
+              <td class="name"><a href="../">../</a></td>
+              <td class="size"></td>
+            </tr>
+            
+            <tr>
+              <td class="type">directory</td>
+              <td class="name"><a href="tamkungz/">tamkungz/</a></td>
+              <td class="size"></td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </section>
 
-  <p style="margin-top:32px;color:#777">
-    Generated at 2026-07-03T01:13:46.992070Z
-  </p>
+    <footer>
+      Generated at 2026-07-03T01:21:17.192106+00:00
+    </footer>
+  </main>
 </body>
 </html>

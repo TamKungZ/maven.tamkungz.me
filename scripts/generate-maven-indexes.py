@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parent.parent
 
-SITE_NAME = "TamKungZ_ Maven Repository (Permanent)"
+SITE_NAME = "TamKungZ_ Stable Maven Repository"
 BASE_URL = "https://maven.tamkungz.me"
 FAVICON_URL = "https://pub-df28fb9f69aa4326a1c6e10fb1f2abdc.r2.dev/assets-image/maven/tamkungz-repo-favicon-v2-nobg.ico"
 
@@ -63,12 +63,12 @@ def page_description(directory: Path) -> str:
 
     if path == "/":
         return (
-            "Public Maven repository for TamKungZ projects. "
+            "Public Maven repository for TamKungZ_ projects. "
             "Use this repository with Gradle, Maven, Forge, Fabric, NeoForge, "
             "and other JVM build tools."
         )
 
-    return f"Browse Maven artifacts in {path} from the TamKungZ Maven Repository."
+    return f"Browse Maven artifacts in {path} from the TamKungZ_ Stable Maven Repository."
 
 
 def is_inside_maven_root(path: Path) -> bool:
@@ -393,7 +393,7 @@ def make_index(directory: Path):
 <body>
   <main>
     <header>
-      <h1>TamKungZ_ Maven Repository (Permanent)</h1>
+      <h1>TamKungZ_ Stable Maven Repository</h1>
       <div class="subtitle">{escape(description)}</div>
       <div class="path">{escape(path_text)}</div>
     </header>

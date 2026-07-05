@@ -5,6 +5,14 @@
     <lastmod>2026-07-05</lastmod>
   </url>
   <url>
+    <loc>https://packages.tamkungz.me/apk/</loc>
+    <lastmod>2026-07-05</lastmod>
+  </url>
+  <url>
+    <loc>https://packages.tamkungz.me/apk/x86_64/</loc>
+    <lastmod>2026-07-05</lastmod>
+  </url>
+  <url>
     <loc>https://packages.tamkungz.me/apps/</loc>
     <lastmod>2026-07-05</lastmod>
   </url>
@@ -50,6 +58,14 @@
   </url>
   <url>
     <loc>https://packages.tamkungz.me/apt/pool/main/t/tarminal/</loc>
+    <lastmod>2026-07-05</lastmod>
+  </url>
+  <url>
+    <loc>https://packages.tamkungz.me/arch/</loc>
+    <lastmod>2026-07-05</lastmod>
+  </url>
+  <url>
+    <loc>https://packages.tamkungz.me/arch/x86_64/</loc>
     <lastmod>2026-07-05</lastmod>
   </url>
   <url>
@@ -118,6 +134,14 @@
   </url>
   <url>
     <loc>https://packages.tamkungz.me/rpm/x86_64/repodata/</loc>
+    <lastmod>2026-07-05</lastmod>
+  </url>
+  <url>
+    <loc>https://packages.tamkungz.me/xbps/</loc>
+    <lastmod>2026-07-05</lastmod>
+  </url>
+  <url>
+    <loc>https://packages.tamkungz.me/xbps/x86_64/</loc>
     <lastmod>2026-07-05</lastmod>
   </url>
 </urlset>

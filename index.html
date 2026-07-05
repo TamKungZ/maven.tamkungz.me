@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>TamKungZ_ Packages</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Public package repository for TamKungZ_ projects, including Maven artifacts, APT packages, RPM packages, signatures, and release metadata.">
+  <meta name="description" content="Public package repository for TamKungZ_ projects, including APT, RPM, Alpine APK, Void XBPS, Arch pacman repositories, release assets, signatures, and metadata.">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#78e398">
 
@@ -14,13 +14,20 @@
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="TamKungZ_ Packages">
-  <meta property="og:description" content="Public package repository for TamKungZ_ projects, including Maven artifacts, APT packages, RPM packages, signatures, and release metadata.">
+  <meta property="og:description" content="Public package repository for TamKungZ_ projects, including APT, RPM, Alpine APK, Void XBPS, Arch pacman repositories, release assets, signatures, and metadata.">
   <meta property="og:url" content="https://packages.tamkungz.me/">
   <meta property="og:site_name" content="TamKungZ_ Packages">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="TamKungZ_ Packages">
-  <meta name="twitter:description" content="Public package repository for TamKungZ_ projects, including Maven artifacts, APT packages, RPM packages, signatures, and release metadata.">
+  <meta name="twitter:description" content="Public package repository for TamKungZ_ projects, including APT, RPM, Alpine APK, Void XBPS, Arch pacman repositories, release assets, signatures, and metadata.">
+
+  <meta name="author" content="TamKungZ_">
+  <meta name="twitter:site" content="@TamKungZ_">
+  <meta name="twitter:creator" content="@TamKungZ_">
+
+  <link rel="me" href="https://github.com/TamKungZ">
+  <link rel="author" href="mailto:dev@tamkungz.me">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
   <style>
@@ -229,12 +236,30 @@ footer {
   .size { display: none; }
 }
 </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": 'TamKungZ_ Packages',
+    "url": 'https://packages.tamkungz.me',
+    "creator": {
+      "@type": "Person",
+      "name": 'TamKungZ_',
+      "email": "mailto:dev@tamkungz.me",
+      "sameAs": [
+        'https://x.com/TamKungZ_',
+        'https://github.com/TamKungZ'
+      ]
+    }
+  }
+  </script>
 </head>
 <body>
   <main>
     <header>
       <h1>TamKungZ_ Packages</h1>
-      <div class="subtitle">Public package repository for TamKungZ_ projects, including Maven artifacts, APT packages, RPM packages, signatures, and release metadata.</div>
+      <div class="subtitle">Public package repository for TamKungZ_ projects, including APT, RPM, Alpine APK, Void XBPS, Arch pacman repositories, release assets, signatures, and metadata.</div>
       <div class="path">/</div>
     </header>
 
@@ -283,6 +308,63 @@ sudo dnf install tarminal</code></pre>
       <div class="code-block">
         <div class="code-head">
           <div class="code-title">
+            <span class="code-lang" style="color: #78e398;">bash</span>
+            <span>Alpine APK</span>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)" type="button">copy</button>
+        </div>
+        <pre><code class="language-bash">sudo mkdir -p /etc/apk/keys
+curl -fsSL https://packages.tamkungz.me/apk/tamkungz.rsa.pub | \
+  sudo tee /etc/apk/keys/tamkungz.rsa.pub &gt;/dev/null
+
+echo &quot;https://packages.tamkungz.me/apk/$(apk --print-arch)&quot; | \
+  sudo tee -a /etc/apk/repositories
+
+sudo apk update
+sudo apk add tarminal</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-title">
+            <span class="code-lang" style="color: #78e398;">bash</span>
+            <span>Void XBPS</span>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)" type="button">copy</button>
+        </div>
+        <pre><code class="language-bash">sudo mkdir -p /etc/xbps.d
+sudo tee /etc/xbps.d/tamkungz.conf &gt;/dev/null &lt;&lt;&#x27;EOF&#x27;
+repository=https://packages.tamkungz.me/xbps/x86_64
+EOF
+
+sudo xbps-install -S
+sudo xbps-install tarminal</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-title">
+            <span class="code-lang" style="color: #78e398;">bash</span>
+            <span>Arch Linux</span>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)" type="button">copy</button>
+        </div>
+        <pre><code class="language-bash">curl -fsSL https://packages.tamkungz.me/gpg.key | sudo pacman-key --add -
+sudo pacman-key --lsign-key release@tamkungz.me || true
+
+sudo tee -a /etc/pacman.conf &gt;/dev/null &lt;&lt;&#x27;EOF&#x27;
+[tamkungz]
+Server = https://packages.tamkungz.me/arch/$arch
+SigLevel = DatabaseRequired PackageOptional
+EOF
+
+sudo pacman -Sy
+sudo pacman -S tarminal</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-title">
             <span class="code-lang" style="color: #e0af68;">groovy</span>
             <span>Maven / Gradle</span>
           </div>
@@ -303,6 +385,12 @@ sudo dnf install tarminal</code></pre>
           
             <tr>
               <td class="type">directory</td>
+              <td class="name"><a href="apk/">apk/</a></td>
+              <td class="size"></td>
+            </tr>
+            
+            <tr>
+              <td class="type">directory</td>
               <td class="name"><a href="apps/">apps/</a></td>
               <td class="size"></td>
             </tr>
@@ -310,6 +398,12 @@ sudo dnf install tarminal</code></pre>
             <tr>
               <td class="type">directory</td>
               <td class="name"><a href="apt/">apt/</a></td>
+              <td class="size"></td>
+            </tr>
+            
+            <tr>
+              <td class="type">directory</td>
+              <td class="name"><a href="arch/">arch/</a></td>
               <td class="size"></td>
             </tr>
             
@@ -326,6 +420,12 @@ sudo dnf install tarminal</code></pre>
             </tr>
             
             <tr>
+              <td class="type">directory</td>
+              <td class="name"><a href="xbps/">xbps/</a></td>
+              <td class="size"></td>
+            </tr>
+            
+            <tr>
               <td class="type">gpg key</td>
               <td class="name"><a href="gpg.key">gpg.key</a></td>
               <td class="size">3.07 KB</td>
@@ -336,7 +436,8 @@ sudo dnf install tarminal</code></pre>
     </section>
 
     <footer>
-      Generated at 2026-07-05T05:42:55.125208+00:00
+      Generated at 2026-07-05T21:41:21.355925+00:00<br>
+      Made by <a href="https://github.com/TamKungZ">TamKungZ_</a> &middot; <a href="https://x.com/TamKungZ_">X</a> &middot; <a href="mailto:dev@tamkungz.me">dev@tamkungz.me</a>
     </footer>
   </main>
 

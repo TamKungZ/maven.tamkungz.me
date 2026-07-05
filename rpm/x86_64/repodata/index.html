@@ -39,26 +39,26 @@
 
     body {
       margin: 0;
-      background:
-        radial-gradient(circle at top left, rgba(169, 255, 175, 0.08), transparent 320px),
-        var(--bg);
+      background: var(--bg);
       color: var(--text);
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 15px;
       line-height: 1.6;
     }
 
     main {
-      width: min(1040px, calc(100% - 32px));
-      margin: 48px auto;
+      width: min(960px, calc(100% - 32px));
+      margin: 44px auto;
     }
 
-    header { margin-bottom: 28px; }
+    header { margin-bottom: 24px; }
 
     h1 {
       margin: 0;
-      font-size: clamp(28px, 4vw, 42px);
-      letter-spacing: -0.04em;
-      line-height: 1.1;
+      font-size: clamp(22px, 3.2vw, 32px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
     }
 
     .subtitle {
@@ -70,26 +70,65 @@
     .path {
       display: inline-flex;
       align-items: center;
-      margin-top: 20px;
-      padding: 7px 11px;
+      margin-top: 16px;
+      padding: 6px 10px;
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 6px;
       background: var(--panel);
       color: var(--accent);
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .usage {
-      margin: 22px 0 26px;
-      padding: 16px;
-      overflow-x: auto;
+      margin: 20px 0 24px;
       border: 1px solid var(--line);
-      border-radius: 12px;
-      background: linear-gradient(180deg, var(--panel-2), var(--panel));
+      border-radius: 10px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    .usage-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--line);
+      background: var(--panel-2);
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .copy-btn {
+      font: inherit;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 3px 10px;
+      cursor: pointer;
+      transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .copy-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .copy-btn.copied {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-soft);
     }
 
     pre {
       margin: 0;
+      padding: 14px;
+      overflow-x: auto;
       color: #dcdcdc;
       white-space: pre;
     }
@@ -97,8 +136,8 @@
     .table-wrap {
       overflow: hidden;
       border: 1px solid var(--line);
-      border-radius: 12px;
-      background: rgba(15, 15, 15, 0.72);
+      border-radius: 10px;
+      background: var(--panel);
     }
 
     table {
@@ -173,38 +212,38 @@
             
             <tr>
               <td class="type">metadata</td>
-              <td class="name"><a href="1b83f6c76e092a00b33e880978d753e1e682602c611e6aeefc9d38d9a650befd-primary.xml.gz">1b83f6c76e092a00b33e880978d753e1e682602c611e6aeefc9d38d9a650befd-primary.xml.gz</a></td>
-              <td class="size">926 bytes</td>
+              <td class="name"><a href="7b2bca14f2629900c2efb654e2ae8382c0a9db0c60f64691a59c0d540489515e-other.xml.gz">7b2bca14f2629900c2efb654e2ae8382c0a9db0c60f64691a59c0d540489515e-other.xml.gz</a></td>
+              <td class="size">288 bytes</td>
+            </tr>
+            
+            <tr>
+              <td class="type">file</td>
+              <td class="name"><a href="92625d140ea9e614de0ef5241ad660a1f0cfd039d4d29e47110cc8c171978d05-other.sqlite.bz2">92625d140ea9e614de0ef5241ad660a1f0cfd039d4d29e47110cc8c171978d05-other.sqlite.bz2</a></td>
+              <td class="size">740 bytes</td>
             </tr>
             
             <tr>
               <td class="type">metadata</td>
-              <td class="name"><a href="75cb6c42a21974d2f573ee3aa867de5fd8bc4a99a6bf4f0db6799118b1738b72-filelists.xml.gz">75cb6c42a21974d2f573ee3aa867de5fd8bc4a99a6bf4f0db6799118b1738b72-filelists.xml.gz</a></td>
-              <td class="size">305 bytes</td>
+              <td class="name"><a href="99b65720e1b21a614228efd451fbe6cb42eb740ef3c0aa0882bd2632564ea97c-filelists.xml.gz">99b65720e1b21a614228efd451fbe6cb42eb740ef3c0aa0882bd2632564ea97c-filelists.xml.gz</a></td>
+              <td class="size">309 bytes</td>
+            </tr>
+            
+            <tr>
+              <td class="type">file</td>
+              <td class="name"><a href="a7c0ebbd3f8573b19e85a1aa1221b9998f23ad9a6f11f1fd27f99928582b34c2-primary.sqlite.bz2">a7c0ebbd3f8573b19e85a1aa1221b9998f23ad9a6f11f1fd27f99928582b34c2-primary.sqlite.bz2</a></td>
+              <td class="size">2.68 KB</td>
+            </tr>
+            
+            <tr>
+              <td class="type">file</td>
+              <td class="name"><a href="ace3d20a2188549a967d5d77626e8d6b6fa052e45181031e0ec0a06afaf0856a-filelists.sqlite.bz2">ace3d20a2188549a967d5d77626e8d6b6fa052e45181031e0ec0a06afaf0856a-filelists.sqlite.bz2</a></td>
+              <td class="size">850 bytes</td>
             </tr>
             
             <tr>
               <td class="type">metadata</td>
-              <td class="name"><a href="7f2582216662117390158b0c6f2a812b7f44324e79956bf7f0f50696336156be-other.xml.gz">7f2582216662117390158b0c6f2a812b7f44324e79956bf7f0f50696336156be-other.xml.gz</a></td>
-              <td class="size">286 bytes</td>
-            </tr>
-            
-            <tr>
-              <td class="type">file</td>
-              <td class="name"><a href="c32d0bd552ba44581faed988a767f7d987bb9c32e01ddc4862dd5ed32705a4e8-filelists.sqlite.bz2">c32d0bd552ba44581faed988a767f7d987bb9c32e01ddc4862dd5ed32705a4e8-filelists.sqlite.bz2</a></td>
-              <td class="size">849 bytes</td>
-            </tr>
-            
-            <tr>
-              <td class="type">file</td>
-              <td class="name"><a href="dc52d5244ebaa33b09a84c325dd0deb98b212d6fb22f1a7f51d542f127b9bc80-other.sqlite.bz2">dc52d5244ebaa33b09a84c325dd0deb98b212d6fb22f1a7f51d542f127b9bc80-other.sqlite.bz2</a></td>
-              <td class="size">732 bytes</td>
-            </tr>
-            
-            <tr>
-              <td class="type">file</td>
-              <td class="name"><a href="e4fb4a38a1083bfdbda724d2f8e0a1bf3bbe9ec14c5590ce771fea3f761ef3fe-primary.sqlite.bz2">e4fb4a38a1083bfdbda724d2f8e0a1bf3bbe9ec14c5590ce771fea3f761ef3fe-primary.sqlite.bz2</a></td>
-              <td class="size">2.69 KB</td>
+              <td class="name"><a href="f910c051df56af0103718eb2682f967d410d2f61e0c498d5575989f681388c0c-primary.xml.gz">f910c051df56af0103718eb2682f967d410d2f61e0c498d5575989f681388c0c-primary.xml.gz</a></td>
+              <td class="size">928 bytes</td>
             </tr>
             
             <tr>
@@ -224,8 +263,28 @@
     </section>
 
     <footer>
-      Generated at 2026-07-05T02:01:42.407010+00:00
+      Generated at 2026-07-05T02:31:27.530455+00:00
     </footer>
   </main>
+
+  <script>
+    function copyUsage(btn) {
+      const code = document.getElementById('usage-code');
+      if (!code) return;
+
+      navigator.clipboard.writeText(code.textContent).then(() => {
+        const original = btn.textContent;
+        btn.textContent = 'copied';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('copied');
+        }, 1400);
+      }).catch(() => {
+        btn.textContent = 'failed';
+        setTimeout(() => { btn.textContent = 'copy'; }, 1400);
+      });
+    }
+  </script>
 </body>
 </html>

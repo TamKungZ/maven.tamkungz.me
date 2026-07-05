@@ -1,24 +1,24 @@
 Architectures: amd64
 Codename: stable
 Components: main
-Date: Sun, 05 Jul 2026 02:01:41 +0000
+Date: Sun, 05 Jul 2026 02:31:26 +0000
 Description: TamKungZ_ APT Package Repository
 Label: TamKungZ_ Packages
 Origin: TamKungZ_
 Suite: stable
 MD5Sum:
- ef5ed78eab3c70f012aefb6608f0272b              197 Release
- 5844ee884d049c7deb0387397f75bc28             1576 main/binary-amd64/Packages
- a6e5039e6abc0ac12658e98c7afd7c32              770 main/binary-amd64/Packages.gz
+ 2731fada8c10b737099c6e0beb799e5f              197 Release
+ b8e3813f85bf78fee23cfa9fd1c35cae             1576 main/binary-amd64/Packages
+ a5b91e821fbc1b632cc68a91e773e015              769 main/binary-amd64/Packages.gz
 SHA1:
- c3947cada6f86b289105da58c6b984b8695162c6              197 Release
- 162cb2e4e5f44aee6c0c3cbfff569489af01884e             1576 main/binary-amd64/Packages
- b21263c5d612d37f49574e411584d7949e81f830              770 main/binary-amd64/Packages.gz
+ 894d80d604abf94be3a01787d38f480d4cba31a7              197 Release
+ 3b36a47955fd510ed2a239073ef4baf71cadb6af             1576 main/binary-amd64/Packages
+ 563024b87dd4b591b0f8a7adb96d99ecffd35101              769 main/binary-amd64/Packages.gz
 SHA256:
- 397aa0910df02667eacdd93688af782e9de115b51e59bc1e8dd754a335dd6131              197 Release
- 3b475183179ea9d0e4f9e993d66ee7a795cff5fc22a99ac1fbbc7de13dba4336             1576 main/binary-amd64/Packages
- c8dc3a7fa9a0217398e9efc420ff7d5e7a446d172da1a29272276d4cbd56671a              770 main/binary-amd64/Packages.gz
+ f7efa5df53a14eb2d2c28218c55859c7b8956c36695412cbdfb94b1fe7054ab9              197 Release
+ d546d7e6be8c62e9e2f10d264edaf18a6e63cc68114894808a5ab56082f04ef5             1576 main/binary-amd64/Packages
+ 283f355f9c41cafd895345ad68f5943733d51db74f9d4842c32b33d5894a6f34              769 main/binary-amd64/Packages.gz
 SHA512:
- c2f99b5e2b1370d602f8b9826bdef9377d1efd938c276e6937337e160713d361939bf8a99eb054c321eb7d241f0958cbce3cdae4a45afe69fc9abe34df428bd6              197 Release
- 5a035bc25a04b0442bff67d8bfd70ad78f928873c9c2bebfcf24e586b2ccf6e105ad5481aa54c637968f34e94ef1edc4e07d5e03be75bbde65b32c35576cabee             1576 main/binary-amd64/Packages
- 09663ada754dc6c606553f4f03332b46555b016340d12aa4d47ee05832d03dd40ad5006ee80d752f1625f910e676422a06e77c44582ae7c204009c1eb6520986              770 main/binary-amd64/Packages.gz
+ 068cd9c3844161f04658fe3a3becae74917a26d7f46f5b0c1ec19edd2d75dea583d87a46165a2726d0a64dba25765d537c5f6e938b7f9f75b2aa4100e0887872              197 Release
+ f3725585c3f003f8be3e8d088af31294ce7582e00829d91fc9434b2c8a124ab087ff61fef543acb3088da34036a8f4ba0fd4318f78415cfdfa85c234d8ab76a7             1576 main/binary-amd64/Packages
+ 8d2febb0ebf9850e27bff94e3fe1ac3de2d86c10fde9a65baca13487bac7288a43572d38d97f5e3574aa911081df676eab62c20d71a2aaabeae0733a11c4258c              769 main/binary-amd64/Packages.gz

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://maven.tamkungz.me/sitemap.xml
+Sitemap: https://packages.tamkungz.me/sitemap.xml

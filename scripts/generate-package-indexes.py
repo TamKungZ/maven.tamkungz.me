@@ -1,52 +1,22 @@
 from __future__ import annotations
 
+import re
+import urllib.error
+import urllib.request
 from datetime import datetime, timezone
+from functools import lru_cache
 from html import escape
 from pathlib import Path
 
+import pkg_data as data
+import pkg_render as render
+
 ROOT = Path(__file__).resolve().parent.parent
 
-SITE_NAME = "TamKungZ_ Packages"
-BASE_URL = "https://packages.tamkungz.me"
-FAVICON_URL = "https://pub-df28fb9f69aa4326a1c6e10fb1f2abdc.r2.dev/assets-image/maven/tamkungz-repo-favicon-v2-nobg.ico"
-
-# Root-level package repository layout:
-# /apt              APT repository shared by all Debian packages
-# /rpm/<basearch>   RPM repository shared by all RPM packages
-# /maven            Maven repository, preferred new layout
-# /me               Maven legacy group root, supported for compatibility
-# /apps/<app>       human-readable product pages only
-PROJECT_ROOTS = {
-    "apt",
-    "rpm",
-    "maven",
-    "me",  # legacy Maven group root
-    "apps",
-}
-
-IGNORE_DIRS = {
-    ".git",
-    ".github",
-    "scripts",
-    "examples",
-    "target",
-    "node_modules",
-    "__pycache__",
-}
-
-IGNORE_FILES = {
-    "index.html",
-    "CNAME",
-    ".nojekyll",
-    "README.md",
-    "LICENSE",
-    "404.html",
-    "robots.txt",
-    "sitemap.xml",
-    "push.txt",
-}
-
 GENERATED_PAGES: list[Path] = []
+
+
+# --- Path helpers --------------------------------------------------------
 
 
 def display_path(directory: Path) -> str:
@@ -58,8 +28,17 @@ def display_path(directory: Path) -> str:
 def canonical_url(directory: Path) -> str:
     path = display_path(directory)
     if path == "/":
-        return BASE_URL + "/"
-    return BASE_URL + path
+        return data.BASE_URL + "/"
+    return data.BASE_URL + path
+
+
+def maven_url() -> str:
+    if (ROOT / "maven").exists():
+        return data.BASE_URL + "/maven/"
+    return data.BASE_URL + "/"
+
+
+# --- Filesystem scanning --------------------------------------------------
 
 
 def file_size(path: Path) -> str:
@@ -77,7 +56,7 @@ def file_size(path: Path) -> str:
 
 def is_hidden_or_ignored(path: Path) -> bool:
     name = path.name
-    if name in IGNORE_FILES or name in IGNORE_DIRS:
+    if name in data.IGNORE_FILES or name in data.IGNORE_DIRS:
         return True
     if name.startswith(".") and name not in {".well-known"}:
         return True
@@ -85,7 +64,7 @@ def is_hidden_or_ignored(path: Path) -> bool:
 
 
 def is_visible_root_dir(path: Path) -> bool:
-    return path.name in PROJECT_ROOTS
+    return path.name in data.PROJECT_ROOTS
 
 
 def file_kind(path: Path) -> str:
@@ -147,18 +126,35 @@ def visible_children(directory: Path) -> list[Path]:
     return children
 
 
-def maven_url() -> str:
-    if (ROOT / "maven").exists():
-        return BASE_URL + "/maven/"
-    return BASE_URL + "/"
+# --- README summaries (local + remote) -----------------------------------
 
 
-def read_readme_summary(directory: Path) -> str | None:
-    readme = directory / "README.md"
-    if not readme.exists():
+@lru_cache(maxsize=None)
+def fetch_remote_text(url: str) -> str | None:
+    """Best-effort fetch. Returns None on any failure so a flaky network
+    never breaks the whole build - the caller falls back to a generic
+    description instead."""
+    request = urllib.request.Request(
+        url, headers={"User-Agent": "tamkungz-packages-index-generator"}
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=10) as response:
+            return response.read().decode("utf-8", errors="replace")
+    except (urllib.error.URLError, TimeoutError, ValueError):
         return None
 
-    text = readme.read_text(encoding="utf-8", errors="replace").strip()
+
+def strip_inline_markdown(text: str) -> str:
+    text = re.sub(r"`([^`]*)`", r"\1", text)
+    text = re.sub(r"\*\*([^*]*)\*\*", r"\1", text)
+    text = re.sub(r"__([^_]*)__", r"\1", text)
+    text = re.sub(r"\*([^*]*)\*", r"\1", text)
+    text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", text)
+    return text
+
+
+def summarize_readme_text(text: str) -> str | None:
+    text = text.strip()
     if not text:
         return None
 
@@ -176,7 +172,31 @@ def read_readme_summary(directory: Path) -> str | None:
     if not lines:
         return None
 
-    return " ".join(lines)
+    return strip_inline_markdown(" ".join(lines))
+
+
+def read_local_readme_summary(directory: Path) -> str | None:
+    readme = directory / "README.md"
+    if not readme.exists():
+        return None
+
+    text = readme.read_text(encoding="utf-8", errors="replace")
+    return summarize_readme_text(text)
+
+
+def read_remote_readme_summary(app_name: str) -> str | None:
+    url = data.APP_README_SOURCES.get(app_name)
+    if not url:
+        return None
+
+    text = fetch_remote_text(url)
+    if not text:
+        return None
+
+    return summarize_readme_text(text)
+
+
+# --- Page content ----------------------------------------------------
 
 
 def page_description(directory: Path) -> str:
@@ -198,10 +218,10 @@ def page_description(directory: Path) -> str:
         return "Human-readable app pages. Package downloads are served from /apt and /rpm."
 
     if path.startswith("/apps/"):
-        summary = read_readme_summary(directory)
+        app_name = directory.name
+        summary = read_remote_readme_summary(app_name) or read_local_readme_summary(directory)
         if summary:
             return summary
-        app_name = directory.name
         return f"Human-readable package page for {app_name}."
 
     if path.startswith("/maven/") or path.startswith("/me/"):
@@ -210,92 +230,28 @@ def page_description(directory: Path) -> str:
     return f"Browse public package files in {path}."
 
 
-def root_usage() -> str:
-    return f"""# Debian / Ubuntu / Zorin
-curl -fsSL {BASE_URL}/gpg.key | \\
-  sudo gpg --dearmor -o /usr/share/keyrings/tamkungz-packages.gpg
-
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/tamkungz-packages.gpg] {BASE_URL}/apt stable main" | \\
-  sudo tee /etc/apt/sources.list.d/tamkungz-packages.list
-
-sudo apt update
-sudo apt install tarminal
-
-# Fedora / RPM
-sudo tee /etc/yum.repos.d/tamkungz-packages.repo >/dev/null <<'EOF'
-[tamkungz-packages]
-name=TamKungZ Packages
-baseurl={BASE_URL}/rpm/$basearch/
-enabled=1
-gpgcheck=0
-repo_gpgcheck=1
-gpgkey={BASE_URL}/gpg.key
-EOF
-
-sudo dnf install tarminal
-
-# Maven / Gradle
-repositories {{
-    maven {{
-        name = "TamKungZ Packages"
-        url = uri("{maven_url()}")
-    }}
-}}"""
-
-
-def tarminal_usage() -> str:
-    return f"""# Debian / Ubuntu / Zorin
-curl -fsSL {BASE_URL}/gpg.key | \\
-  sudo gpg --dearmor -o /usr/share/keyrings/tamkungz-packages.gpg
-
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/tamkungz-packages.gpg] {BASE_URL}/apt stable main" | \\
-  sudo tee /etc/apt/sources.list.d/tamkungz-packages.list
-
-sudo apt update
-sudo apt install tarminal
-
-# Fedora / RPM
-sudo tee /etc/yum.repos.d/tamkungz-packages.repo >/dev/null <<'EOF'
-[tamkungz-packages]
-name=TamKungZ Packages
-baseurl={BASE_URL}/rpm/$basearch/
-enabled=1
-gpgcheck=0
-repo_gpgcheck=1
-gpgkey={BASE_URL}/gpg.key
-EOF
-
-sudo dnf install tarminal"""
-
-
-def maven_usage() -> str:
-    return f"""repositories {{
-    maven {{
-        name = "TamKungZ Packages"
-        url = uri("{maven_url()}")
-    }}
-}}"""
-
-
-def page_usage(directory: Path) -> str | None:
+def page_usage(directory: Path) -> list[tuple[str, str, str]] | None:
     path = display_path(directory)
 
     if path == "/":
-        return root_usage()
+        return data.root_usage_blocks(data.BASE_URL, maven_url())
     if path == "/apps/tarminal/":
-        return tarminal_usage()
+        return data.tarminal_usage_blocks(data.BASE_URL)
     if path.startswith("/maven/") or path.startswith("/me/"):
-        return maven_usage()
+        return data.maven_usage_blocks(maven_url())
 
     return None
 
 
+# --- Page generation -------------------------------------------------
+
+
 def make_index(directory: Path) -> None:
     path_text = display_path(directory)
-    title = SITE_NAME if path_text == "/" else f"{SITE_NAME} - {path_text}"
+    title = data.SITE_NAME if path_text == "/" else f"{data.SITE_NAME} - {path_text}"
     description = page_description(directory)
     now = datetime.now(timezone.utc).isoformat()
-    usage = page_usage(directory)
+    usage_blocks = page_usage(directory)
 
     rows: list[str] = []
 
@@ -326,255 +282,17 @@ def make_index(directory: Path) -> None:
             """
         )
 
-    usage_block = ""
-    if usage:
-        usage_block = f"""
-    <section class="usage" aria-label="Usage example">
-      <div class="usage-head">
-        <span>usage</span>
-        <button class="copy-btn" onclick="copyUsage(this)" type="button">copy</button>
-      </div>
-      <pre id="usage-code">{escape(usage)}</pre>
-    </section>
-"""
-
-    html = f"""<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>{escape(title)}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="{escape(description)}">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#78e398">
-
-  <link rel="canonical" href="{escape(canonical_url(directory))}">
-  <link rel="icon" href="{escape(FAVICON_URL)}" type="image/x-icon">
-  <link rel="shortcut icon" href="{escape(FAVICON_URL)}" type="image/x-icon">
-
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="{escape(title)}">
-  <meta property="og:description" content="{escape(description)}">
-  <meta property="og:url" content="{escape(canonical_url(directory))}">
-  <meta property="og:site_name" content="{escape(SITE_NAME)}">
-
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="{escape(title)}">
-  <meta name="twitter:description" content="{escape(description)}">
-
-  <style>
-    :root {{
-      color-scheme: dark;
-      --bg: #0f0f0f;
-      --panel: #151515;
-      --panel-2: #1b1b1b;
-      --text: #e8e8e8;
-      --muted: #8f8f8f;
-      --line: #2a2a2a;
-      --accent: #78e398;
-      --accent-soft: rgba(120, 227, 152, 0.12);
-    }}
-
-    * {{ box-sizing: border-box; }}
-
-    body {{
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-      font-size: 15px;
-      line-height: 1.6;
-    }}
-
-    main {{
-      width: min(960px, calc(100% - 32px));
-      margin: 44px auto;
-    }}
-
-    header {{ margin-bottom: 24px; }}
-
-    h1 {{
-      margin: 0;
-      font-size: clamp(22px, 3.2vw, 32px);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-    }}
-
-    .subtitle {{
-      margin-top: 10px;
-      color: var(--muted);
-      max-width: 800px;
-    }}
-
-    .path {{
-      display: inline-flex;
-      align-items: center;
-      margin-top: 16px;
-      padding: 6px 10px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: var(--panel);
-      color: var(--accent);
-      font-size: 13px;
-    }}
-
-    .usage {{
-      margin: 20px 0 24px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: var(--panel);
-      overflow: hidden;
-    }}
-
-    .usage-head {{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 14px;
-      border-bottom: 1px solid var(--line);
-      background: var(--panel-2);
-      color: var(--muted);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }}
-
-    .copy-btn {{
-      font: inherit;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      background: transparent;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      padding: 3px 10px;
-      cursor: pointer;
-      transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
-    }}
-
-    .copy-btn:hover {{
-      color: var(--accent);
-      border-color: var(--accent);
-    }}
-
-    .copy-btn.copied {{
-      color: var(--accent);
-      border-color: var(--accent);
-      background: var(--accent-soft);
-    }}
-
-    pre {{
-      margin: 0;
-      padding: 14px;
-      overflow-x: auto;
-      color: #dcdcdc;
-      white-space: pre;
-    }}
-
-    .table-wrap {{
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: var(--panel);
-    }}
-
-    table {{
-      width: 100%;
-      border-collapse: collapse;
-    }}
-
-    td {{
-      padding: 11px 14px;
-      border-bottom: 1px solid var(--line);
-      vertical-align: middle;
-    }}
-
-    tr:last-child td {{ border-bottom: 0; }}
-    tr:hover {{ background: var(--accent-soft); }}
-
-    .type {{
-      width: 130px;
-      color: var(--muted);
-      text-transform: uppercase;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-    }}
-
-    .name {{ word-break: break-all; }}
-
-    .size {{
-      width: 160px;
-      color: var(--muted);
-      text-align: right;
-      white-space: nowrap;
-    }}
-
-    a {{
-      color: var(--accent);
-      text-decoration: none;
-    }}
-
-    a:hover {{ text-decoration: underline; }}
-
-    footer {{
-      margin-top: 28px;
-      color: var(--muted);
-      font-size: 13px;
-    }}
-
-    @media (max-width: 640px) {{
-      main {{ margin: 28px auto; }}
-      td {{ padding: 10px; }}
-      .type {{ width: 90px; }}
-      .size {{ display: none; }}
-    }}
-  </style>
-</head>
-<body>
-  <main>
-    <header>
-      <h1>{escape(title)}</h1>
-      <div class="subtitle">{escape(description)}</div>
-      <div class="path">{escape(path_text)}</div>
-    </header>
-{usage_block}
-    <section class="table-wrap" aria-label="Directory listing">
-      <table>
-        <tbody>
-          {''.join(rows)}
-        </tbody>
-      </table>
-    </section>
-
-    <footer>
-      Generated at {escape(now)}
-    </footer>
-  </main>
-
-  <script>
-    function copyUsage(btn) {{
-      const code = document.getElementById('usage-code');
-      if (!code) return;
-
-      navigator.clipboard.writeText(code.textContent).then(() => {{
-        const original = btn.textContent;
-        btn.textContent = 'copied';
-        btn.classList.add('copied');
-        setTimeout(() => {{
-          btn.textContent = original;
-          btn.classList.remove('copied');
-        }}, 1400);
-      }}).catch(() => {{
-        btn.textContent = 'failed';
-        setTimeout(() => {{ btn.textContent = 'copy'; }}, 1400);
-      }});
-    }}
-  </script>
-</body>
-</html>
-"""
+    html = render.render_page(
+        title=title,
+        description=description,
+        path_text=path_text,
+        canonical_url=canonical_url(directory),
+        favicon_url=data.FAVICON_URL,
+        site_name=data.SITE_NAME,
+        rows_html="".join(rows),
+        usage_blocks=usage_blocks,
+        generated_at=now,
+    )
 
     (directory / "index.html").write_text(html, encoding="utf-8")
     GENERATED_PAGES.append(directory)
@@ -584,7 +302,7 @@ def write_robots() -> None:
     content = f"""User-agent: *
 Allow: /
 
-Sitemap: {BASE_URL}/sitemap.xml
+Sitemap: {data.BASE_URL}/sitemap.xml
 """
     (ROOT / "robots.txt").write_text(content, encoding="utf-8")
 
@@ -619,7 +337,7 @@ def main() -> None:
             continue
 
         relative_parts = directory.relative_to(ROOT).parts
-        if any(part in IGNORE_DIRS for part in relative_parts):
+        if any(part in data.IGNORE_DIRS for part in relative_parts):
             continue
         if any(part.startswith(".") and part not in {".well-known"} for part in relative_parts):
             continue

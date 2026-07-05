@@ -4,40 +4,40 @@ Hash: SHA512
 Architectures: amd64
 Codename: stable
 Components: main
-Date: Sun, 05 Jul 2026 21:41:19 +0000
+Date: Sun, 05 Jul 2026 21:54:31 +0000
 Description: TamKungZ_ APT Package Repository
 Label: TamKungZ_ Packages
 Origin: TamKungZ_
 Suite: stable
 MD5Sum:
- a4a7c893f772dcff8d473a3841782883              197 Release
+ 5ac0df4d1039e0c46e0c71fbb86e0d38              197 Release
  302b9d079c3a0e246fa3ac5b66f866fb             1577 main/binary-amd64/Packages
- 801112dffd95b18e40bb5389580535e4              766 main/binary-amd64/Packages.gz
+ 1862a65f1994254aa7b913d6ef86d8c4              766 main/binary-amd64/Packages.gz
 SHA1:
- 64931fc256d15f313fc530ba0d44609bfea97f67              197 Release
+ 9bf983150b64a50a2db7791860e7f05765782f40              197 Release
  34d2f0a2dc5bad5ae4e9e9a4a9a269d12fc112af             1577 main/binary-amd64/Packages
- 870e61c2acce4c65fe36cc7f491a325cef0cfc7d              766 main/binary-amd64/Packages.gz
+ acaeb95e6dc73b575e0c0ad6f553d13506435182              766 main/binary-amd64/Packages.gz
 SHA256:
- f46f85ce99eda9f5e723915e7fb4a7180887f31259ed0f0c13a73d3f03b889e8              197 Release
+ b1e84458b2bf13ca48cbe0fb938bd3f46d633b9c414f8f1813a436ec3696770b              197 Release
  ff3170d630e3cc5b65582e31e8bf78e8e8194373e1803887fcf7c3b4628cf440             1577 main/binary-amd64/Packages
- 94ac2123dc57667e3b551b9e719fde62c402b1de53b553b9f43c29c5aaff213c              766 main/binary-amd64/Packages.gz
+ fe0746202eaaad9053b8dd44237b20364890607a6af978f6e24ed055b5cf3377              766 main/binary-amd64/Packages.gz
 SHA512:
- 558190b20612775cc96e4b5eac418535a70925bfa80a8b48bc9f05da02bbfba21d6b35df432aba5caacf1069909f553f5e64897ae35fdf3ea5253d8a55cb6288              197 Release
+ 52a7ef48750a1064bef642b51b7c84b5da58e68fec3f058087aceff984814351db12398751fdf44a29fd1f6027a7d399b3b28975844da6ebfd217989b905e51b              197 Release
  e02b678999c1a30b942e87a93393cf5751e4b9cbc7296253d4429731af22898eb96b2a9832b58a1de9e075669db8df0c5400c37257e6fc51087a1339991c242d             1577 main/binary-amd64/Packages
- cd933070d291ef1cb3c1fe2c5da895c18e32b16b1e37299844460e5aff53165795e9ca2aeac26dec70157462fee58f0b47bfdb32c01b18b7be0821921f8b17d6              766 main/binary-amd64/Packages.gz
+ a28c66f3fc53f8df326723dd34973a9aecc183dbaa6b4c42bedeb1a72046afb4ef3ff4557a98aa4a16eacd3b7e2ad2afd78e8310bcad1504a12d651d501c66b1              766 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEtksVY3kVTltsF20NYVdQO/zRCaQFAmpKz38ACgkQYVdQO/zR
-CaQrvxAAgA6Qw/rBdxZNtvjABwJ0lFI8WaL21EVxg/s76dIh0GGX1AUxrKX3oORZ
-H13GmFkkNMiyu1XF91MKan+ZUVPoI74S3hgqqRig7+Vz01G7ocYyLKF8i48EcCNL
-oBuU7KT3JFgtTmXrmTZhGYEr2+MZyKQhL9znBJNfjAI3+NUNcn+DAGyPqIZ/WE4A
-envEER7SNBebtSYE761TSIztyLqTYYav0VsvEVXa7hqs2tFWt6Mr1GKWUKi4xrIY
-MOMlu3evax9NWl1Hu7+XK4nvfyOL387E6YGewfA7cfohGhEN36ZLHYP76I7HRznm
-Ikr2th/vReIYjqGV7EiVxqfjcqFm0nq3pd/2MK346Jm1zMOsE4Etw8Z2LzfJk3bm
-CY3ghb8hk/mqsaceU6F3kaUxk+zhqbntV06mRUmYHziuaHnYOqJWxR+Px2h0Ekjm
-c3bdnjLANXTE0lHMDhVcQUdh1+olcPa3140TL2skqIQxL6i0XpHc8KPvmeAgiULz
-CggDLEmOu5GLlWsJoErVGh8R6ca/USL62feZH8u1C59a3HxYCm3IBQzYn41kEKa1
-sTW1CH22tObvojONeBz3/2lj8R5lbZ9nlXzN3LBkREOQ0Ysw/mi26oSx60xFw3Rv
-LHx52+PPmb94IQvJGqjoOLO2EF/BoFZFAeHcJjwH+hdz/W6TCcY=
-=crsL
+iQIzBAEBCgAdFiEEtksVY3kVTltsF20NYVdQO/zRCaQFAmpK0pcACgkQYVdQO/zR
+CaR+Rw/+NSQYLxv5MWa0FX857VOQ6H9sHeBkQ+X0sI159lvTHpeznlqzrFmStkFN
+k0UatURsuGGrD5kz0khf+KiDJ4LZo8QRvsl188CJggaA1t+4fOSxNtMurd+iXP2r
+3UXQqljD+ylPPWeTGaJ6SafsFbfpOrIi2ZXS46feExjOGFW9hjxmHEKJVbgwen3n
+pAm0k4NJB7JwPIOkig4nenQVaJmIB2Wyn8QIQO95YwEiuO5egIkiTo4fGw7s7uBQ
+GRaTl/deSQlusk8Rfy/FO9oHuS5LsBSna9y00GpMCDK06w045Tlk2HuwvysLFnUX
+3G6Af1l4inChcvAwP4zx2c08P5awtf/n4JJg3zTskWHn6e53prn+lvCnhC1Fpzit
+gPWzo8lA4nOQwu9n53uasu8WdzVuc2tsGHX2rp91/0AkIoW3PbtkLmOfcj8UexAM
+5PV28odEjTEWqy76MSprpQpRpRmsfKdFyymIqyzJHE5zTfHH4UDeini1Qh7155K2
+3pG+c1sASJLU3FNmmYc7dan0IaZNELQ0LExPTps7rdveCwva7D8gT5quX3SUkSVH
+w7mQy8oWwpH5yvzdK0rSGtm9tQ9bVOiXwi19pEsMhcVLz5SfcW2Oih2tffSfAiLj
+U2xyL8w/ftPBbFf+tZEoRL2Ozpn+ULIWFCKH6ExVEMIIlsqi2n0=
+=Gflv
 -----END PGP SIGNATURE-----

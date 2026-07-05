@@ -14,6 +14,13 @@ SITE_NAME = "TamKungZ_ Packages"
 BASE_URL = "https://packages.tamkungz.me"
 FAVICON_URL = "https://pub-df28fb9f69aa4326a1c6e10fb1f2abdc.r2.dev/assets-image/maven/tamkungz-repo-favicon-v2-nobg.ico"
 
+# --- Author / SEO identity ---------------------------------------------
+
+AUTHOR_NAME = "TamKungZ_"
+AUTHOR_TWITTER_HANDLE = "@TamKungZ_"
+AUTHOR_EMAIL = "dev@tamkungz.me"
+AUTHOR_GITHUB_URL = "https://github.com/TamKungZ"
+
 # --- Repository layout ---------------------------------------------------
 
 # Root-level package repository layout:

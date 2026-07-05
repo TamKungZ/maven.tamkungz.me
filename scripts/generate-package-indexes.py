@@ -67,6 +67,24 @@ def is_visible_root_dir(path: Path) -> bool:
     return path.name in data.PROJECT_ROOTS
 
 
+def is_app_page_dir(directory: Path) -> bool:
+    """True for a leaf /apps/<name>/ directory - i.e. an individual app's
+    page, as opposed to the /apps/ index itself or something nested deeper.
+
+    These pages are meant to be hand-authored (see PROJECT_ROOTS docs in
+    pkg_data.py), so the generator should never overwrite an index.html
+    someone already wrote there."""
+    try:
+        parts = directory.relative_to(ROOT).parts
+    except ValueError:
+        return False
+    return len(parts) == 2 and parts[0] == "apps"
+
+
+def has_existing_index(directory: Path) -> bool:
+    return (directory / "index.html").exists()
+
+
 def file_kind(path: Path) -> str:
     if path.is_dir():
         return "directory"
@@ -289,9 +307,14 @@ def make_index(directory: Path) -> None:
         canonical_url=canonical_url(directory),
         favicon_url=data.FAVICON_URL,
         site_name=data.SITE_NAME,
+        base_url=data.BASE_URL,
         rows_html="".join(rows),
         usage_blocks=usage_blocks,
         generated_at=now,
+        author_name=data.AUTHOR_NAME,
+        author_twitter_handle=data.AUTHOR_TWITTER_HANDLE,
+        author_email=data.AUTHOR_EMAIL,
+        author_github_url=data.AUTHOR_GITHUB_URL,
     )
 
     (directory / "index.html").write_text(html, encoding="utf-8")
@@ -340,6 +363,12 @@ def main() -> None:
         if any(part in data.IGNORE_DIRS for part in relative_parts):
             continue
         if any(part.startswith(".") and part not in {".well-known"} for part in relative_parts):
+            continue
+
+        if is_app_page_dir(directory) and has_existing_index(directory):
+            # Hand-authored app page - keep it as-is, but still list it in
+            # the sitemap so it's discoverable.
+            GENERATED_PAGES.append(directory)
             continue
 
         make_index(directory)

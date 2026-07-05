@@ -290,6 +290,70 @@ def render_usage_section(usage_blocks: list[tuple[str, str, str]] | None) -> str
 """
 
 
+def render_author_meta(author_name: str, author_twitter_handle: str) -> str:
+    twitter_handle = author_twitter_handle.lstrip("@")
+
+    return f"""
+  <meta name="author" content="{escape(author_name)}">
+  <meta name="twitter:site" content="@{escape(twitter_handle)}">
+  <meta name="twitter:creator" content="@{escape(twitter_handle)}">"""
+
+
+def render_author_link_tags(author_github_url: str, author_email: str) -> str:
+    return f"""
+  <link rel="me" href="{escape(author_github_url)}">
+  <link rel="author" href="mailto:{escape(author_email)}">"""
+
+
+def render_author_jsonld(
+    author_name: str,
+    author_twitter_handle: str,
+    author_email: str,
+    author_github_url: str,
+    site_name: str,
+    base_url: str,
+) -> str:
+    twitter_handle = author_twitter_handle.lstrip("@")
+    twitter_url = f"https://x.com/{twitter_handle}"
+
+    # Kept as a small hand-built JSON literal (no user input beyond static
+    # config) so this module doesn't need to import json for one block.
+    return f"""
+  <script type="application/ld+json">
+  {{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": {escape(site_name)!r},
+    "url": {escape(base_url)!r},
+    "creator": {{
+      "@type": "Person",
+      "name": {escape(author_name)!r},
+      "email": "mailto:{escape(author_email)}",
+      "sameAs": [
+        {escape(twitter_url)!r},
+        {escape(author_github_url)!r}
+      ]
+    }}
+  }}
+  </script>"""
+
+
+def render_footer_credit(
+    author_name: str,
+    author_twitter_handle: str,
+    author_email: str,
+    author_github_url: str,
+) -> str:
+    twitter_handle = author_twitter_handle.lstrip("@")
+    twitter_url = f"https://x.com/{twitter_handle}"
+
+    return (
+        f'Made by <a href="{escape(author_github_url)}">{escape(author_name)}</a>'
+        f' &middot; <a href="{escape(twitter_url)}">X</a>'
+        f' &middot; <a href="mailto:{escape(author_email)}">{escape(author_email)}</a>'
+    )
+
+
 def render_page(
     *,
     title: str,
@@ -298,13 +362,27 @@ def render_page(
     canonical_url: str,
     favicon_url: str,
     site_name: str,
+    base_url: str,
     rows_html: str,
     usage_blocks: list[tuple[str, str, str]] | None,
     generated_at: str,
+    author_name: str,
+    author_twitter_handle: str,
+    author_email: str,
+    author_github_url: str,
 ) -> str:
     usage_html = render_usage_section(usage_blocks)
     needs_groovy = bool(usage_blocks) and any(lang == "groovy" for _, lang, _ in usage_blocks)
     groovy_script = f'\n  <script src="{HLJS_JS_URL.rsplit("/", 1)[0]}/languages/groovy.min.js"></script>' if needs_groovy else ""
+
+    author_meta = render_author_meta(author_name, author_twitter_handle)
+    author_link_tags = render_author_link_tags(author_github_url, author_email)
+    author_jsonld = render_author_jsonld(
+        author_name, author_twitter_handle, author_email, author_github_url, site_name, base_url
+    )
+    footer_credit = render_footer_credit(
+        author_name, author_twitter_handle, author_email, author_github_url
+    )
 
     return f"""<!doctype html>
 <html lang="en">
@@ -329,9 +407,12 @@ def render_page(
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="{escape(title)}">
   <meta name="twitter:description" content="{escape(description)}">
+{author_meta}
+{author_link_tags}
 
   <link rel="stylesheet" href="{HLJS_CSS_URL}">
   <style>{PAGE_CSS}</style>
+{author_jsonld}
 </head>
 <body>
   <main>
@@ -350,7 +431,8 @@ def render_page(
     </section>
 
     <footer>
-      Generated at {escape(generated_at)}
+      Generated at {escape(generated_at)}<br>
+      {footer_credit}
     </footer>
   </main>
 

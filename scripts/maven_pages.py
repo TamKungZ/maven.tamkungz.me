@@ -3,8 +3,8 @@ from html import escape
 from datetime import datetime, timezone
 import os
 
-import pkg_data as data
-import pkg_render as render
+import html_renderer as render
+import site_config as data
 
 
 def find_repo_root() -> Path:
@@ -54,6 +54,12 @@ ALLOWED_FILE_SUFFIXES = {
 }
 
 GENERATED_PAGES: list[Path] = []
+
+
+def configure_root(root: Path) -> None:
+    global ROOT, MAVEN_ROOT
+    ROOT = root
+    MAVEN_ROOT = root / "maven"
 
 
 def display_path(directory: Path) -> str:
@@ -257,7 +263,10 @@ def write_sitemap():
     (ROOT / "sitemap.xml").write_text(content, encoding="utf-8")
 
 
-def generate_indexes() -> list[Path]:
+def generate_maven_pages(root: Path | None = None) -> list[Path]:
+    if root is not None:
+        configure_root(root)
+
     GENERATED_PAGES.clear()
 
     if not MAVEN_ROOT.exists():
@@ -273,8 +282,12 @@ def generate_indexes() -> list[Path]:
     return GENERATED_PAGES.copy()
 
 
+def generate_indexes(root: Path | None = None) -> list[Path]:
+    return generate_maven_pages(root)
+
+
 def main():
-    generate_indexes()
+    generate_maven_pages()
     write_robots()
     write_sitemap()
 

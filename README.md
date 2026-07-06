@@ -104,6 +104,17 @@ build/maven-repo/
 into `maven/`, commit, and push. The Gradle/Maven output already contains the
 group path, for example `me/tamkungz/...` or `org/ex/...`.
 
+## Generate index pages
+
+The main entrypoint is:
+
+```bash
+python3 scripts/build_site.py
+```
+
+It generates Linux package indexes, Maven indexes, `robots.txt`, and
+`sitemap.xml`.
+
 ## Notes
 
 - Use fixed release versions like `1.0.0`.

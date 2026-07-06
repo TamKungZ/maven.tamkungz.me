@@ -23,16 +23,14 @@ AUTHOR_GITHUB_URL = "https://github.com/TamKungZ"
 
 # --- Repository layout ---------------------------------------------------
 
-# Root-level package repository layout.  release.yml currently publishes
-# apt/rpm/apk/xbps/arch/apps; maven and me remain supported when the package
-# site repo contains JVM artifacts.
+# Root-level package repository layout. release.yml currently publishes
+# apt/rpm/apk/xbps/arch/apps; JVM artifacts live under /maven.
 # /apt              APT repository shared by all Debian packages
 # /rpm/<basearch>   RPM repository shared by all RPM packages
 # /apk/<arch>       Alpine APK repository
 # /xbps/<arch>      Void Linux XBPS repository
 # /arch/<arch>      Arch Linux pacman repository
-# /maven            Maven repository, preferred new layout
-# /me               Maven legacy group root, supported for compatibility
+# /maven            Maven repository
 # /apps/<app>       human-readable product pages only
 PROJECT_ROOTS = {
     "apt",
@@ -41,7 +39,6 @@ PROJECT_ROOTS = {
     "xbps",
     "arch",
     "maven",
-    "me",  # legacy Maven group root
     "apps",
 }
 

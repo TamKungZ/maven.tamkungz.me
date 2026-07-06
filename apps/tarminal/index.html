@@ -383,7 +383,7 @@
   <header>
     <div class="brand-row">
       <a class="brand" href="https://packages.tamkungz.me/apps/tarminal/">
-        <img src="logo-horizontal.svg" alt="Tarminal" height="34" style="vertical-align:middle;display:block;">
+        <img src="logo-horizontal.svg" alt="Tarminal" height="34" style="display:block;">
         <small>tarball &rarr; desktop app installer for Linux, by TamKungZ_</small>
       </a>
       <span class="version-tag">v0.1.4</span>
@@ -436,7 +436,7 @@
           <h3 class="sub">Debian / Ubuntu / Zorin</h3>
           <div class="codebox">
             <div class="tab"><span>bash</span>
-              <button class="copy-btn" onclick="copyCode(this, `curl -fsSL https://packages.tamkungz.me/gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/tamkungz-packages.gpg\necho &quot;deb [arch=amd64 signed-by=/usr/share/keyrings/tamkungz-packages.gpg] https://packages.tamkungz.me/apt stable main&quot; | sudo tee /etc/apt/sources.list.d/tamkungz-packages.list\nsudo apt update\nsudo apt install tarminal`)">copy</button>
+              <button class="copy-btn" onclick="copyCode(this)">copy</button>
             </div>
             <pre>curl -fsSL https://packages.tamkungz.me/gpg.key | \
   sudo gpg --dearmor -o /usr/share/keyrings/tamkungz-packages.gpg
@@ -446,13 +446,22 @@ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/tamkungz-packages.gpg] https
 
 sudo apt update
 sudo apt install tarminal</pre>
-          </div>
-        </div>
+	          </div>
+	          <div class="noteline"><b>Optional:</b> If you prefer packages built by Launchpad for Ubuntu Jammy or Noble, you can install from the PPA instead:</div>
+	          <div class="codebox">
+	            <div class="tab"><span>bash</span>
+	              <button class="copy-btn" onclick="copyCode(this)">copy</button>
+	            </div>
+	            <pre>sudo add-apt-repository ppa:tamkungz/stable
+sudo apt update
+sudo apt install tarminal</pre>
+	          </div>
+	        </div>
         <div>
           <h3 class="sub">Fedora / RPM</h3>
           <div class="codebox">
             <div class="tab"><span>bash</span>
-              <button class="copy-btn" onclick="copyCode(this, `sudo tee /etc/yum.repos.d/tamkungz-packages.repo >/dev/null <<'EOF'\n[tamkungz-packages]\nname=TamKungZ Packages\nbaseurl=https://packages.tamkungz.me/rpm/$basearch/\nenabled=1\ngpgcheck=0\nrepo_gpgcheck=1\ngpgkey=https://packages.tamkungz.me/gpg.key\nEOF\nsudo dnf install tarminal`)">copy</button>
+              <button class="copy-btn" onclick="copyCode(this)">copy</button>
             </div>
             <pre>sudo tee /etc/yum.repos.d/tamkungz-packages.repo >/dev/null <<'EOF'
 [tamkungz-packages]
@@ -477,7 +486,7 @@ sudo dnf install tarminal</pre>
       <h3 class="sub" style="margin-top:16px;">Alpine (APK)</h3>
       <div class="codebox">
         <div class="tab"><span>bash</span>
-          <button class="copy-btn" onclick="copyCode(this, 'sudo mkdir -p /etc/apk/keys\ncurl -fsSL https://packages.tamkungz.me/apk/tamkungz.rsa.pub | \\\n  sudo tee /etc/apk/keys/tamkungz.rsa.pub >/dev/null\n\necho \"https://packages.tamkungz.me/apk\" | \\\n  sudo tee -a /etc/apk/repositories\n\nsudo apk update\nsudo apk add tarminal')">copy</button>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
         </div>
         <pre>sudo mkdir -p /etc/apk/keys
 curl -fsSL https://packages.tamkungz.me/apk/tamkungz.rsa.pub | \
@@ -494,7 +503,7 @@ sudo apk add tarminal</pre>
         <summary>Void Linux (XBPS)</summary>
         <div class="codebox">
           <div class="tab"><span>bash</span>
-            <button class="copy-btn" onclick="copyCode(this, 'sudo mkdir -p /etc/xbps.d\nsudo tee /etc/xbps.d/tamkungz.conf >/dev/null <<\'EOF\'\nrepository=https://packages.tamkungz.me/xbps/$XBPS_ARCH\nEOF\n\nsudo xbps-install -S\nsudo xbps-install tarminal')">copy</button>
+            <button class="copy-btn" onclick="copyCode(this)">copy</button>
           </div>
           <pre>sudo mkdir -p /etc/xbps.d
 sudo tee /etc/xbps.d/tamkungz.conf >/dev/null <<'EOF'
@@ -510,7 +519,7 @@ sudo xbps-install tarminal</pre>
         <summary>Arch Linux (pacman)</summary>
         <div class="codebox">
           <div class="tab"><span>bash</span>
-            <button class="copy-btn" onclick="copyCode(this, 'curl -fsSL https://packages.tamkungz.me/gpg.key | sudo pacman-key --add -\nsudo pacman-key --lsign-key release@tamkungz.me || true\n\nsudo tee -a /etc/pacman.conf >/dev/null <<\'EOF\'\n[tamkungz]\nServer = https://packages.tamkungz.me/arch/$arch\nSigLevel = DatabaseRequired PackageOptional\nEOF\n\nsudo pacman -Sy\nsudo pacman -S tarminal')">copy</button>
+            <button class="copy-btn" onclick="copyCode(this)">copy</button>
           </div>
           <pre>curl -fsSL https://packages.tamkungz.me/gpg.key | sudo pacman-key --add -
 sudo pacman-key --lsign-key release@tamkungz.me || true
@@ -543,7 +552,7 @@ sudo pacman -S tarminal</pre>
       <h2 class="sec" id="usage">Usage</h2>
       <div class="codebox">
         <div class="tab"><span>bash</span>
-          <button class="copy-btn" onclick="copyCode(this, '# Inspect tarball\ntarminal inspect ./myapp-1.2.0-linux-x64.tar.xz\n\n# Install with auto detection\ntarminal install ./myapp.tar.xz\n\n# Skip runtime version probing\ntarminal install ./myapp.tar.xz --no-probe-version\n\n# Manual config prompts\ntarminal install ./app.tar.xz --config\n\n# Use a recipe file\ntarminal install ./app.tar.xz --recipe ./app.tarapp.yml\n\n# System-wide install\nsudo tarminal install ./app.tar.xz --system\n\n# List installed apps\ntarminal list\n\n# Remove an app\ntarminal remove myapp\n\n# Check installed app\ntarminal doctor myapp')">copy</button>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
         </div>
         <pre><span class="rem"># Inspect tarball</span>
 tarminal inspect ./myapp-1.2.0-linux-x64.tar.xz
@@ -588,7 +597,7 @@ tarminal doctor myapp</pre>
           <h3 class="sub">User install</h3>
           <div class="codebox">
             <div class="tab"><span>paths</span>
-              <button class="copy-btn" onclick="copyCode(this, 'App files:   ~/.local/share/tarapp/apps/<app-id>/\nCommand:     ~/.local/bin/<command>\nDesktop:     ~/.local/share/applications/<app-id>.desktop\nIcon:        ~/.local/share/icons/hicolor/256x256/apps/<app-id>.*\nState DB:    ~/.local/state/tarapp/apps.json')">copy</button>
+              <button class="copy-btn" onclick="copyCode(this)">copy</button>
             </div>
             <pre>App files:   ~/.local/share/tarapp/apps/&lt;app-id&gt;/
 Command:     ~/.local/bin/&lt;command&gt;
@@ -601,7 +610,7 @@ State DB:    ~/.local/state/tarapp/apps.json</pre>
           <h3 class="sub">System install</h3>
           <div class="codebox">
             <div class="tab"><span>paths</span>
-              <button class="copy-btn" onclick="copyCode(this, 'App files:   /opt/<app-id>/\nCommand:     /usr/local/bin/<command>\nDesktop:     /usr/share/applications/<app-id>.desktop\nIcon:        /usr/share/icons/hicolor/256x256/apps/<app-id>.*\nState DB:    /var/lib/tarapp/apps.json')">copy</button>
+              <button class="copy-btn" onclick="copyCode(this)">copy</button>
             </div>
             <pre>App files:   /opt/&lt;app-id&gt;/
 Command:     /usr/local/bin/&lt;command&gt;
@@ -650,7 +659,7 @@ bin/&lt;app&gt;</pre>
       <p>External: <code class="inline">--recipe ./app.tarapp.yml</code> &nbsp;|&nbsp; Embedded (inside the archive): <code class="inline">tarapp.yml</code>, <code class="inline">tarapp.yaml</code>, <code class="inline">.tarapp.yml</code>, <code class="inline">.tarapp.yaml</code>, <code class="inline">manifest.yml</code>, <code class="inline">manifest.yaml</code></p>
       <div class="codebox">
         <div class="tab"><span>app.tarapp.yml</span>
-          <button class="copy-btn" onclick="copyCode(this, 'id: com.example.myapp\nname: My App\nversion: 1.0.0\nexec: MyApp\ncommand: myapp\nicon: assets/icon.png\nprobe_version: false\ndesktop:\n  categories:\n    - Utility\n  terminal: false')">copy</button>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
         </div>
         <pre>id: com.example.myapp
 name: My App
@@ -670,7 +679,7 @@ desktop:
       <h2 class="sec" id="build">Build From Source</h2>
       <div class="codebox">
         <div class="tab"><span>bash</span>
-          <button class="copy-btn" onclick="copyCode(this, 'cargo build --workspace\ncargo build --release -p tar-install --bin tar-install\ncargo build --release -p tarminal')">copy</button>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
         </div>
         <pre>cargo build --workspace
 cargo build --release -p tar-install --bin tar-install
@@ -694,7 +703,7 @@ cargo build --release -p tarminal</pre>
       <p>Install the packaging tools once:</p>
       <div class="codebox">
         <div class="tab"><span>bash</span>
-          <button class="copy-btn" onclick="copyCode(this, 'cargo install cargo-deb cargo-generate-rpm')">copy</button>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
         </div>
         <pre>cargo install cargo-deb cargo-generate-rpm</pre>
       </div>
@@ -703,7 +712,7 @@ cargo build --release -p tarminal</pre>
           <h3 class="sub">Build .deb</h3>
           <div class="codebox">
             <div class="tab"><span>bash</span>
-              <button class="copy-btn" onclick="copyCode(this, 'cargo deb -p tar-install\ncargo deb -p tarminal')">copy</button>
+              <button class="copy-btn" onclick="copyCode(this)">copy</button>
             </div>
             <pre>cargo deb -p tar-install
 cargo deb -p tarminal</pre>
@@ -713,7 +722,7 @@ cargo deb -p tarminal</pre>
           <h3 class="sub">Build .rpm</h3>
           <div class="codebox">
             <div class="tab"><span>bash</span>
-              <button class="copy-btn" onclick="copyCode(this, 'cargo build --release -p tar-install --bin tar-install\ncargo build --release -p tarminal\n\ncargo generate-rpm -p crates/tar-install\ncargo generate-rpm -p crates/tarminal')">copy</button>
+              <button class="copy-btn" onclick="copyCode(this)">copy</button>
             </div>
             <pre>cargo build --release -p tar-install --bin tar-install
 cargo build --release -p tarminal
@@ -727,7 +736,7 @@ cargo generate-rpm -p crates/tarminal</pre>
         <summary>Inspect package contents</summary>
         <div class="codebox">
           <div class="tab"><span>bash</span>
-            <button class="copy-btn" onclick="copyCode(this, 'for deb in target/debian/*.deb; do\n  dpkg -I \"$deb\"\n  dpkg -c \"$deb\"\ndone\n\nfor rpm in target/generate-rpm/*.rpm; do\n  rpm -qpi \"$rpm\"\n  rpm -qpl \"$rpm\"\n  rpm -qpR \"$rpm\"\ndone')">copy</button>
+            <button class="copy-btn" onclick="copyCode(this)">copy</button>
           </div>
           <pre>for deb in target/debian/*.deb; do
   dpkg -I "$deb"
@@ -747,7 +756,7 @@ done</pre>
       <p>Releases are handled by GitHub Actions when a version tag is pushed:</p>
       <div class="codebox">
         <div class="tab"><span>bash</span>
-          <button class="copy-btn" onclick="copyCode(this, 'git tag v0.1.0\ngit push origin v0.1.0')">copy</button>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
         </div>
         <pre>git tag v0.1.0
 git push origin v0.1.0</pre>
@@ -862,7 +871,7 @@ git push origin v0.1.0</pre>
         </ul>
         <div class="codebox" style="margin-top:8px;">
           <div class="tab"><span>bash</span>
-            <button class="copy-btn" onclick="copyCode(this, 'sudo tarminal remove blender --scope user')">copy</button>
+            <button class="copy-btn" onclick="copyCode(this)">copy</button>
           </div>
           <pre><span class="rem"># Clean up old root-user install if needed</span>
 sudo tarminal remove blender --scope user</pre>
@@ -980,7 +989,12 @@ sudo tarminal remove blender --scope user</pre>
 </div>
 
 <script>
-  function copyCode(btn, text) {
+  function copyCode(btn) {
+    const box = btn.closest('.codebox');
+    const pre = box ? box.querySelector('pre') : null;
+    const text = pre ? pre.textContent : '';
+    if (!text) return;
+
     navigator.clipboard.writeText(text).then(() => {
       const old = btn.textContent;
       btn.textContent = 'copied';

@@ -39,21 +39,31 @@ PAGE_CSS = """
 
 body {
   margin: 0;
+  min-height: 100vh;
+  border-top: 6px solid var(--accent);
   background: var(--bg);
   color: var(--text);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   font-size: 14px;
   line-height: 1.45;
+  isolation: isolate;
 }
 
 body::before {
   content: "";
-  display: block;
-  height: 6px;
-  background: var(--accent);
+  position: fixed;
+  inset: 6px 0 0 0;
+  z-index: 0;
+  background: url("__BACKGROUND_IMAGE_URL__") top center / cover no-repeat;
+  opacity: 0.14;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.18) 28%, rgba(0, 0, 0, 0.72) 68%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.18) 28%, rgba(0, 0, 0, 0.72) 68%, #000 100%);
 }
 
 main {
+  position: relative;
+  z-index: 1;
   width: min(1180px, calc(100% - 28px));
   margin: 18px auto 28px;
 }
@@ -252,8 +262,10 @@ a:hover {
 
 footer {
   margin-top: 14px;
-  padding-top: 10px;
+  padding: 10px 12px;
   border-top: 1px solid var(--line);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.0);
   color: var(--muted);
   font-size: 12px;
 }
@@ -274,6 +286,8 @@ footer {
   .code-block:last-child { margin-bottom: 0; }
 }
 """
+
+BACKGROUND_IMAGE_PATH = "resources/svg/volonoi.svg"
 
 COPY_SCRIPT = """
 function copyCode(btn) {
@@ -396,6 +410,11 @@ def render_footer_credit(
     )
 
 
+def relative_asset_url(path_text: str, asset_path: str) -> str:
+    depth = len([part for part in path_text.strip("/").split("/") if part])
+    return "../" * depth + asset_path
+
+
 def render_page(
     *,
     title: str,
@@ -416,6 +435,10 @@ def render_page(
     author_github_url: str,
 ) -> str:
     usage_html = render_usage_section(usage_blocks)
+    page_css = PAGE_CSS.replace(
+        "__BACKGROUND_IMAGE_URL__",
+        relative_asset_url(path_text, BACKGROUND_IMAGE_PATH),
+    )
 
     author_meta = render_author_meta(author_name, author_twitter_handle)
     author_link_tags = render_author_link_tags(author_github_url, author_email)
@@ -453,7 +476,7 @@ def render_page(
 {author_meta}
 {author_link_tags}
 
-  <style>{PAGE_CSS}</style>
+  <style>{page_css}</style>
 {author_jsonld}
 </head>
 <body>

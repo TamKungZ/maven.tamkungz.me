@@ -2,26 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>TamKungZ_ Packages</title>
+  <title>TamKungZ_ Packages - /resources/</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Public package repository for TamKungZ_ projects, including APT, RPM, Alpine APK, Void XBPS, Arch pacman repositories, release assets, signatures, and metadata.">
+  <meta name="description" content="Browse public package files in /resources/.">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#03983d">
 
-  <link rel="canonical" href="https://packages.tamkungz.me/">
+  <link rel="canonical" href="https://packages.tamkungz.me/resources/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="TamKungZ_ Packages">
-  <meta property="og:description" content="Public package repository for TamKungZ_ projects, including APT, RPM, Alpine APK, Void XBPS, Arch pacman repositories, release assets, signatures, and metadata.">
-  <meta property="og:url" content="https://packages.tamkungz.me/">
+  <meta property="og:title" content="TamKungZ_ Packages - /resources/">
+  <meta property="og:description" content="Browse public package files in /resources/.">
+  <meta property="og:url" content="https://packages.tamkungz.me/resources/">
   <meta property="og:site_name" content="TamKungZ_ Packages">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="TamKungZ_ Packages">
-  <meta name="twitter:description" content="Public package repository for TamKungZ_ projects, including APT, RPM, Alpine APK, Void XBPS, Arch pacman repositories, release assets, signatures, and metadata.">
+  <meta name="twitter:title" content="TamKungZ_ Packages - /resources/">
+  <meta name="twitter:description" content="Browse public package files in /resources/.">
 
   <meta name="author" content="TamKungZ_">
   <meta name="twitter:site" content="@TamKungZ_">
@@ -66,7 +66,7 @@ body::before {
   position: fixed;
   inset: 6px 0 0 0;
   z-index: 0;
-  background: url("resources/svg/volonoi.svg") top center / cover no-repeat;
+  background: url("../resources/svg/volonoi.svg") top center / cover no-repeat;
   opacity: 0.14;
   pointer-events: none;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.18) 28%, rgba(0, 0, 0, 0.72) 68%, #000 100%);
@@ -320,179 +320,25 @@ footer {
 <body>
   <main>
     <header>
-      <h1>TamKungZ_ Packages</h1>
-      <div class="subtitle">Public package repository for TamKungZ_ projects, including APT, RPM, Alpine APK, Void XBPS, Arch pacman repositories, release assets, signatures, and metadata.</div>
-      <div class="path">/</div>
+      <h1>TamKungZ_ Packages - /resources/</h1>
+      <div class="subtitle">Browse public package files in /resources/.</div>
+      <div class="path">/resources/</div>
     </header>
-
-    <section class="install" aria-label="Install examples">
-      <div class="install-title">Install</div>
-      <div class="install-body">
-
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-title">
-            <span class="code-lang" style="color: #03983d;">bash</span>
-            <span>Debian / Ubuntu / Zorin</span>
-          </div>
-          <button class="copy-btn" onclick="copyCode(this)" type="button">copy</button>
-        </div>
-        <pre><code class="language-bash">curl -fsSL https://packages.tamkungz.me/gpg.key | \
-  sudo gpg --dearmor -o /usr/share/keyrings/tamkungz-packages.gpg
-
-echo &quot;deb [arch=amd64 signed-by=/usr/share/keyrings/tamkungz-packages.gpg] https://packages.tamkungz.me/apt stable main&quot; | \
-  sudo tee /etc/apt/sources.list.d/tamkungz-packages.list
-
-sudo apt update
-sudo apt install tarminal</code></pre>
-      </div>
-
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-title">
-            <span class="code-lang" style="color: #03983d;">bash</span>
-            <span>Fedora / RPM</span>
-          </div>
-          <button class="copy-btn" onclick="copyCode(this)" type="button">copy</button>
-        </div>
-        <pre><code class="language-bash">sudo tee /etc/yum.repos.d/tamkungz-packages.repo &gt;/dev/null &lt;&lt;&#x27;EOF&#x27;
-[tamkungz-packages]
-name=TamKungZ Packages
-baseurl=https://packages.tamkungz.me/rpm/$basearch/
-enabled=1
-gpgcheck=0
-repo_gpgcheck=1
-gpgkey=https://packages.tamkungz.me/gpg.key
-EOF
-
-sudo dnf install tarminal</code></pre>
-      </div>
-
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-title">
-            <span class="code-lang" style="color: #03983d;">bash</span>
-            <span>Alpine APK</span>
-          </div>
-          <button class="copy-btn" onclick="copyCode(this)" type="button">copy</button>
-        </div>
-        <pre><code class="language-bash">sudo mkdir -p /etc/apk/keys
-curl -fsSL https://packages.tamkungz.me/apk/tamkungz.rsa.pub | \
-  sudo tee /etc/apk/keys/tamkungz.rsa.pub &gt;/dev/null
-
-echo &quot;https://packages.tamkungz.me/apk/$(apk --print-arch)&quot; | \
-  sudo tee -a /etc/apk/repositories
-
-sudo apk update
-sudo apk add tarminal</code></pre>
-      </div>
-
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-title">
-            <span class="code-lang" style="color: #03983d;">bash</span>
-            <span>Void XBPS</span>
-          </div>
-          <button class="copy-btn" onclick="copyCode(this)" type="button">copy</button>
-        </div>
-        <pre><code class="language-bash">sudo mkdir -p /etc/xbps.d
-sudo tee /etc/xbps.d/tamkungz.conf &gt;/dev/null &lt;&lt;&#x27;EOF&#x27;
-repository=https://packages.tamkungz.me/xbps/x86_64
-EOF
-
-sudo xbps-install -S
-sudo xbps-install tarminal</code></pre>
-      </div>
-
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-title">
-            <span class="code-lang" style="color: #03983d;">bash</span>
-            <span>Arch Linux</span>
-          </div>
-          <button class="copy-btn" onclick="copyCode(this)" type="button">copy</button>
-        </div>
-        <pre><code class="language-bash">curl -fsSL https://packages.tamkungz.me/gpg.key | sudo pacman-key --add -
-sudo pacman-key --lsign-key release@tamkungz.me || true
-
-sudo tee -a /etc/pacman.conf &gt;/dev/null &lt;&lt;&#x27;EOF&#x27;
-[tamkungz]
-Server = https://packages.tamkungz.me/arch/$arch
-SigLevel = DatabaseRequired PackageOptional
-EOF
-
-sudo pacman -Sy
-sudo pacman -S tarminal</code></pre>
-      </div>
-
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-title">
-            <span class="code-lang" style="color: #7a5b12;">groovy</span>
-            <span>Maven / Gradle</span>
-          </div>
-          <button class="copy-btn" onclick="copyCode(this)" type="button">copy</button>
-        </div>
-        <pre><code class="language-groovy">repositories {
-    maven {
-        name = &quot;TamKungZ Packages&quot;
-        url = uri(&quot;https://packages.tamkungz.me/maven/&quot;)
-    }
-}</code></pre>
-      </div>
-      </div>
-    </section>
 
     <section class="table-wrap" aria-label="Directory listing">
       <table>
         <tbody>
           
             <tr class="row-directory">
-              <td class="type">directory</td>
-              <td class="name"><a href="apk/">apk/</a></td>
+              <td class="type">dir</td>
+              <td class="name"><a href="../">../</a></td>
               <td class="size"></td>
             </tr>
             
             <tr class="row-directory">
               <td class="type">directory</td>
-              <td class="name"><a href="apps/">apps/</a></td>
+              <td class="name"><a href="svg/">svg/</a></td>
               <td class="size"></td>
-            </tr>
-            
-            <tr class="row-directory">
-              <td class="type">directory</td>
-              <td class="name"><a href="apt/">apt/</a></td>
-              <td class="size"></td>
-            </tr>
-            
-            <tr class="row-directory">
-              <td class="type">directory</td>
-              <td class="name"><a href="arch/">arch/</a></td>
-              <td class="size"></td>
-            </tr>
-            
-            <tr class="row-directory">
-              <td class="type">directory</td>
-              <td class="name"><a href="maven/">maven/</a></td>
-              <td class="size"></td>
-            </tr>
-            
-            <tr class="row-directory">
-              <td class="type">directory</td>
-              <td class="name"><a href="rpm/">rpm/</a></td>
-              <td class="size"></td>
-            </tr>
-            
-            <tr class="row-directory">
-              <td class="type">directory</td>
-              <td class="name"><a href="xbps/">xbps/</a></td>
-              <td class="size"></td>
-            </tr>
-            
-            <tr class="row-gpg-key">
-              <td class="type">gpg key</td>
-              <td class="name"><a href="gpg.key">gpg.key</a></td>
-              <td class="size">3.07 KB</td>
             </tr>
             
         </tbody>
@@ -500,7 +346,7 @@ sudo pacman -S tarminal</code></pre>
     </section>
 
     <footer>
-      Generated at 2026-07-10T17:08:18.569043+00:00<br>
+      Generated at 2026-07-10T17:08:18.946847+00:00<br>
       Made by <a href="https://github.com/TamKungZ">TamKungZ_</a> &middot; <a href="https://x.com/TamKungZ_">X</a> &middot; <a href="mailto:dev@tamkungz.me">dev@tamkungz.me</a>
     </footer>
   </main>

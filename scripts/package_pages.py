@@ -345,7 +345,8 @@ def generate_package_pages(root: Path) -> list[Path]:
 
         if has_existing_index(directory):
             try:
-                if directory.relative_to(root).parts[0] == "apps":
+                parts = directory.relative_to(root).parts
+                if len(parts) >= 2 and parts[0] == "apps":
                     generated_pages.append(directory)
                     continue
             except (ValueError, IndexError):

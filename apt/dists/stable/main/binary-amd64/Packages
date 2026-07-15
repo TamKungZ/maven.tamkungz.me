@@ -15,6 +15,23 @@ Description: Live video wallpaper for GNOME
  Livedesk renders a looping video as the GNOME desktop background via
  a GNOME Shell extension and a native GStreamer daemon.
 
+Package: livedesk
+Version: 0.1.1
+Architecture: amd64
+Maintainer: TamKungZ_ <dev@tamkungz.me>
+Depends: gjs, gir1.2-gtk-4.0, gir1.2-adw-1, gnome-shell, libgstreamer1.0-0, gstreamer1.0-plugins-good, gstreamer1.0-plugins-bad, gstreamer1.0-libav, dbus-user-session
+Recommends: totem | ffmpeg
+Filename: pool/main/l/livedesk/livedesk_0.1.1_amd64.deb
+Size: 551934
+MD5sum: e936a1b46a8caad9f70d4f8c02b40a37
+SHA1: c0179ed93dc34923bdb0cf7bb31bb812eceb0f8f
+SHA256: 5cf67c3313d752b1518a003e591c2498e416ac26a10a2e798bb2ad1a1a1157f1
+Section: gnome
+Priority: optional
+Description: Live video wallpaper for GNOME
+ Livedesk renders a looping video as the GNOME desktop background via
+ a GNOME Shell extension and a native GStreamer daemon.
+
 Package: tar-install
 Version: 0.2.0-1
 Architecture: amd64

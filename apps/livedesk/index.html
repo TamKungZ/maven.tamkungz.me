@@ -4,6 +4,59 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Livedesk — Live Wallpaper for GNOME</title>
+<meta name="description" content="Livedesk is a live video wallpaper app for GNOME that renders video as a real Shell background actor, with a Rust and GStreamer daemon plus a GTK4/Libadwaita configuration app.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#1a5fb4">
+<link rel="canonical" href="https://packages.tamkungz.me/apps/livedesk/">
+<link rel="icon" href="https://static.tamkungz.me/assets-image/livedesk-live-wallpaper/icons/hicolor/scalable/apps/me.tamkungz.Livedesk.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Livedesk — Live Wallpaper for GNOME">
+<meta property="og:description" content="A GNOME live wallpaper app that renders video behind normal windows using a Shell extension, Rust/GStreamer daemon, and GTK4 settings app.">
+<meta property="og:url" content="https://packages.tamkungz.me/apps/livedesk/">
+<meta property="og:site_name" content="TamKungZ_ Packages">
+<meta property="og:image" content="https://static.tamkungz.me/assets-image/livedesk-live-wallpaper/preview/livedesk-live-wallpaper-preview-low.gif">
+<meta property="og:image:type" content="image/gif">
+<meta property="og:image:alt" content="Livedesk live wallpaper preview on GNOME.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Livedesk — Live Wallpaper for GNOME">
+<meta name="twitter:description" content="Live video wallpaper for GNOME Shell 40-51, powered by a Rust/GStreamer daemon and GTK4/Libadwaita configuration app.">
+<meta name="twitter:image" content="https://static.tamkungz.me/assets-image/livedesk-live-wallpaper/preview/livedesk-live-wallpaper-preview-low.gif">
+<meta name="twitter:image:alt" content="Livedesk live wallpaper preview on GNOME.">
+<meta name="author" content="TamKungZ_">
+<meta name="twitter:site" content="@TamKungZ_">
+<meta name="twitter:creator" content="@TamKungZ_">
+<link rel="me" href="https://github.com/TamKungZ">
+<link rel="author" href="mailto:dev@tamkungz.me">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Livedesk",
+  "applicationCategory": "DesktopApplication",
+  "operatingSystem": "Linux",
+  "description": "Livedesk is a live video wallpaper app for GNOME that renders video as a real Shell background actor.",
+  "url": "https://packages.tamkungz.me/apps/livedesk/",
+  "image": "https://static.tamkungz.me/assets-image/livedesk-live-wallpaper/preview/livedesk-live-wallpaper-preview-low.gif",
+  "codeRepository": "https://github.com/TamKungZ/livedesk-live-wallpaper-for-gnome",
+  "downloadUrl": "https://github.com/TamKungZ/livedesk-live-wallpaper-for-gnome/releases/latest",
+  "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+  "programmingLanguage": ["Rust", "JavaScript"],
+  "author": {
+    "@type": "Person",
+    "name": "TamKungZ_",
+    "email": "mailto:dev@tamkungz.me",
+    "sameAs": [
+      "https://github.com/TamKungZ",
+      "https://x.com/TamKungZ_"
+    ]
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
 <style>
   :root{
     --bg: #ffffff;
@@ -68,6 +121,26 @@
   .btn:hover{ background:var(--text); color:var(--bg); }
   .btn-primary{ background:var(--text); color:var(--bg); }
   .btn-primary:hover{ background:var(--bg); color:var(--text); }
+  .preview{
+    margin-top:30px;
+    border:1px solid var(--border);
+    background:var(--bg-alt);
+  }
+  .preview img{
+    display:block;
+    width:100%;
+    height:auto;
+    aspect-ratio:16 / 9;
+    object-fit:cover;
+    background:var(--code-bg);
+  }
+  .preview figcaption{
+    padding:8px 10px;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+    font-family:var(--mono);
+    font-size:0.76rem;
+  }
 
   section{ padding:40px 0; border-top:1px solid var(--border); }
   h2{ font-family:var(--mono); font-size:1.25rem; font-weight:700; margin-bottom:14px; }
@@ -173,6 +246,10 @@
       <a class="btn" href="https://github.com/TamKungZ/livedesk-live-wallpaper-for-gnome">source on github</a>
       <a class="btn" href="https://github.com/TamKungZ/livedesk-live-wallpaper-for-gnome/releases/latest">latest release</a>
     </div>
+    <figure class="preview">
+      <img src="https://static.tamkungz.me/assets-image/livedesk-live-wallpaper/preview/livedesk-live-wallpaper-preview-low.gif" alt="Livedesk live wallpaper preview running on GNOME." loading="eager" decoding="async">
+      <figcaption>preview: video wallpaper rendered as the GNOME desktop background</figcaption>
+    </figure>
   </div>
 </header>
 

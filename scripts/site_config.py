@@ -49,6 +49,7 @@ IGNORE_DIRS = {
     ".github",
     "scripts",
     "examples",
+    "resources",
     "target",
     "node_modules",
     "__pycache__",

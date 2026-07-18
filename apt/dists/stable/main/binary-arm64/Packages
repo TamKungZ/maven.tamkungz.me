@@ -1,0 +1,17 @@
+Package: livedesk
+Version: 1.0.0
+Architecture: arm64
+Maintainer: TamKungZ_ <dev@tamkungz.me>
+Depends: gjs, gir1.2-gtk-4.0, gir1.2-gtk-3.0, gir1.2-adw-1, gir1.2-ayatanaappindicator3-0.1, gnome-shell, libgstreamer1.0-0, gstreamer1.0-plugins-good, gstreamer1.0-plugins-bad, gstreamer1.0-libav, dbus-user-session
+Recommends: totem | ffmpeg
+Filename: pool/main/l/livedesk/livedesk_1.0.0_arm64.deb
+Size: 551692
+MD5sum: 32ad0cd5d689f66f9b0961e3b155ce62
+SHA1: fd52ec6effe2cfbd464ee454dadd9103db013dd3
+SHA256: d5aedb60e9fc83a00e60d93ea67b463044e5edec8a54b758875331868a18a4af
+Section: gnome
+Priority: optional
+Description: Live video wallpaper for GNOME
+ Livedesk teaches GNOME's background setting to accept video files via
+ a GNOME Shell native background patch and a GStreamer daemon.
+
